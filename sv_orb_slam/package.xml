@@ -1,0 +1,17 @@
+<package>
+  <name>sv_orb_slam</name>
+  <version>0.0.1</version>
+  <description>
+    The sv_orb_slam package
+  </description>
+
+  <license>GPLv3</license>
+
+  <maintainer email="quchao@seas.upenn.edu">Chao Qu</maintainer>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>
