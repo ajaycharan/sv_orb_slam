@@ -1,0 +1,21 @@
+<launch>
+  <arg name="bag_path" default="/media/chao/Seagate/bag/vicon/vicon_loop2.bag"/>
+	<arg name="bag_start" default="0"/>
+	<arg name="bag_rate" default="1.0"/>
+
+	<node pkg="rosbag" type="play" name="player" output="log"
+		args="-d 5 -s $(arg bag_start) -r $(arg bag_rate) $(arg bag_path)">
+	</node>
+
+	<node pkg="rviz" type="rviz" name="rviz"
+		args="-d $(find orb_slam)/rviz/orb_slam.rviz" output="log">
+	</node>
+
+ 	<node pkg="orb_slam" type="orb_slam_node" name="orb_slam"
+ 		output="screen">
+ 		<param name="vocabulary" type="string" value="$(find orb_slam)/Data/ORBvoc.yml"/>
+ 		<rosparam command="load" file="$(find orb_slam)/params/orb_slam.yaml" />
+		<remap from="~image" to="/stereo/left/image_raw" />
+	</node>
+
+</launch>
