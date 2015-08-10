@@ -1,6 +1,6 @@
 <launch>
-  <arg name="bag_path" default="/media/chao/Seagate/bag/vicon/vicon_loop2.bag"/>
-	<arg name="bag_start" default="0"/>
+  <arg name="bag_path" default="/home/chao/Workspace/bag/D512/exp_v1/galt_experimental_v1_led_row_forth_2015-07-31-00-53-40.bag"/>
+	<arg name="bag_start" default="20"/>
 	<arg name="bag_rate" default="1.0"/>
 
 	<node pkg="rosbag" type="play" name="player" output="log"
@@ -15,7 +15,6 @@
  		output="screen">
  		<param name="vocabulary" type="string" value="$(find orb_slam)/Data/ORBvoc.yml"/>
  		<rosparam command="load" file="$(find orb_slam)/params/orb_slam.yaml" />
-		<remap from="~image" to="/stereo/left/image_raw" />
+		<remap from="~image" to="/mono/image_raw"/>
 	</node>
-
 </launch>

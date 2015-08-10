@@ -1,4 +1,5 @@
 #include <ros/ros.h>
+#include <ros/package.h>
 #include <iostream>
 #include <fstream>
 #include <boost/thread.hpp>
@@ -97,6 +98,28 @@ void Node::run() {
   }
 
   // Save keyframe poses at the end of the execution
+  ofstream f;
+
+  vector<ORB_SLAM::KeyFrame*> keyframes = world_.GetAllKeyFrames();
+  std::sort(keyframes.begin(), keyframes.end(), ORB_SLAM::KeyFrame::lId);
+
+  ROS_INFO("Saving Keyframe Trajectory to KeyFrameTrajectory.txt");
+  const auto strFile =
+      ros::package::getPath("orb_slam") + "/" + "KeyFrameTrajectory.txt";
+  f.open(strFile.c_str());
+  f << std::fixed;
+
+  for (ORB_SLAM::KeyFrame* kf : keyframes) {
+    if (kf->isBad()) continue;
+
+    cv::Mat R = kf->GetRotation().t();
+    vector<float> q = ORB_SLAM::Converter::toQuaternion(R);
+    cv::Mat t = kf->GetCameraCenter();
+    f << setprecision(6) << kf->mTimeStamp << setprecision(7) << " "
+      << t.at<float>(0) << " " << t.at<float>(1) << " " << t.at<float>(2) << " "
+      << q[0] << " " << q[1] << " " << q[2] << " " << q[3] << endl;
+  }
+  f.close();
 }
 
 void Node::cameraCb(const sensor_msgs::ImageConstPtr& image_msg,
