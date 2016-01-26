@@ -9,9 +9,8 @@ find_package(Eigen3 REQUIRED)
 
 catkin_package(
   INCLUDE_DIRS .
-  LIBRARIES g2o_solver_cholmod g2o_solver_dense
-  g2o_stuff g2o_types_sba
-  g2o_types_sim3 g2o_types_slam3d
+  LIBRARIES g2o_core g2o_solver_dense g2o_types_sba g2o_types_slam3d
+  g2o_solver_cholmod g2o_stuff g2o_types_sim3
   )
 
 include_directories(

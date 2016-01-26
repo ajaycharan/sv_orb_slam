@@ -53,6 +53,7 @@ target_link_libraries(${PROJECT_NAME}
     ${catkin_LIBRARIES}
     ${EIGEN3_LIBS}
     DBoW2
+    cholmod
     )
 
 add_executable(orb_slam_main src/main.cc)
